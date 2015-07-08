@@ -18,8 +18,10 @@ $(function() {
         };
 
         this.showDeck = function() {
-            $("#dealer-cards").empty();
-            $("#player-cards").empty().append("<h3>Player</h3>");
+            $("#dealer-cards").children("img").remove();
+
+            $("#player-cards").children("img").remove();
+            $("#player-cards").children("span").empty();
 
             var cards = this.showCardsArr();
             for(var i = this.cardMin - 1; i <= this.cardMax - 1; i++) {
@@ -76,6 +78,17 @@ $(function() {
             return this;
         };
 
+        this.addPlayerName = function() {
+            var name = prompt("Please enter your name");
+
+            if(name != null) {
+                // alert(name);
+
+                $("#player-cards").find("span").append("Name: Matt");
+            }
+
+            return this;
+        };
     }
 
 
@@ -115,6 +128,12 @@ $(function() {
         e.preventDefault();
 
         playerHand.discardCard("#" + $(this).attr('id'));
+    });
+
+    $("#add-name").on("click", function(e) {
+        e.preventDefault();
+
+        playerHand.addPlayerName();
     });
 
 });
