@@ -1,70 +1,85 @@
 $(function() {
 // Deck of Cards Game JavaScript
 
-// Deck constructor
-function Deck() {
-    this.cardMin = 1;
-    this.cardMax = 52;
+    // Deck constructor
+    function Deck() {
+        this.cardMin = 1;
+        this.cardMax = 52;
 
-    this.showCardsArr = function() {
+        this.showCardsArr = function() {
 
-        this.dealerCardsArr = [];
+            this.dealerCardsArr = [];
 
-        for(var i = this.cardMin; i <= this.cardMax; i++) {
-            this.dealerCardsArr.push(i);
+            for(var i = this.cardMin; i <= this.cardMax; i++) {
+                this.dealerCardsArr.push(i);
+            }
+
+            return this.dealerCardsArr;
+        };
+
+        this.showDeck = function() {
+            $("#dealer-cards").empty();
+            $("#player-cards").empty().append("<h3>Player</h3>");
+
+            var cards = this.showCardsArr();
+            for(var i = this.cardMin - 1; i <= this.cardMax - 1; i++) {
+                $("#dealer-cards").append("<img id='dealer_card_" + cards[i] + "' src='images/" + cards[i] + ".png' width='50'/>");
+            }
+
+            return this;
+        };
+
+        this.shuffleDeck = function() {
+            $("#dealer-cards").empty();
+
+            var cards = this.showCardsArr();
+            var j = 0;
+            var temp = null;
+
+            for (var i = cards.length - 1; i > 0; i -= 1) {
+                j = Math.floor(Math.random() * (i + 1));
+                temp = cards[i];
+                cards[i] = cards[j];
+                cards[j] = temp;
+
+                $("#dealer-cards").append("<img id='dealer_card_" + cards[i] + "' src='images/" + cards[i] + ".png' width='50'/>");
+            }
+
+            return this;
         }
 
-        return this.dealerCardsArr;
-    };
+        this.dealFirstCard = function() {
+            var firstCard = $("#dealer-cards").children("img").first();
 
-    this.showDeck = function() {
-        $("#dealer-cards").empty();
-        $("#player-cards").empty().append("<h3>Player</h3>");
+            firstCard.clone().appendTo("#player-cards");
+            firstCard.remove();
 
-        var cards = this.showCardsArr();
-        for(var i = this.cardMin - 1; i <= this.cardMax - 1; i++) {
-            $("#dealer-cards").append("<img id='dealer_card_" + cards[i] + "' src='images/" + cards[i] + ".png' width='50'/>");
+            return this;
         }
 
-        return this;
-    };
+        this.dealRandomCard = function() {
+            var randomCard = $("#dealer-cards").children("img").eq(Math.floor(Math.random() * this.cardMax));
 
-    this.shuffleDeck = function() {
-        $("#dealer-cards").empty();
+            randomCard.clone().appendTo("#player-cards");
+            randomCard.remove();
 
-        var cards = this.showCardsArr();
-        var j = 0;
-        var temp = null;
-
-        for (var i = cards.length - 1; i > 0; i -= 1) {
-            j = Math.floor(Math.random() * (i + 1));
-            temp = cards[i];
-            cards[i] = cards[j];
-            cards[j] = temp;
-
-            $("#dealer-cards").append("<img id='dealer_card_" + cards[i] + "' src='images/" + cards[i] + ".png' width='50'/>");
+            return this;
         }
-
-        return this;
     }
 
-    this.dealFirstCard = function() {
-        var firstCard = $("#dealer-cards").find("img").first();
+    function Player() {
 
-        firstCard.clone().appendTo("#player-cards");
+        this.discardCard = function(imgID) {
+           $(imgID).remove();
 
-        firstCard.remove();
+            console.log(imgID);
+            return this;
+        };
+
     }
 
-    this.dealRandomCard = function() {
-        var randomCard = $("#dealer-card").children("img").eq(0);
 
-        randomCard.remove();
-    }
-}
-
-
-    // Create new object instance for the deck
+    // Create new object instance for Deck
     var dealerDeckAction = new Deck();
 
     // Show dealer deck when clicking reset deck
@@ -90,5 +105,16 @@ function Deck() {
         dealerDeckAction.dealRandomCard();
     });
 
+
+    // Create new object instance for Player
+    var playerHand = new Player();
+
+    // When clicking on a card image in the player's hand
+    // remove it from said player's hand
+    $(document).on("click", "#player-cards > img", function(e) {
+        e.preventDefault();
+
+        playerHand.discardCard("#" + $(this).attr('id'));
+    });
 
 });
