@@ -1,0 +1,35 @@
+/****** Custom Styles ******/
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: green;
+}
+
+#wrapper {
+    width: 960px;
+    padding: 20px 0;
+    margin: 0 auto;
+    height: 400px;
+    background: #fff;
+    position: relative;
+}
+
+#dealer {
+    position: absolute;
+    left: 50px;
+    bottom: 20px;
+    width: 800px;
+    height: 170px;
+    overflow: hidden;
+}
+
+#dealer ul {
+    list-style: none;
+    float: right;
+    padding: 0 220px 0 0;
+}
+
+#dealer li {
+    display: inline-block;
+    float: left;
+    padding: 0 0 0 20px;
+}
