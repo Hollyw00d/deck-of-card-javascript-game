@@ -5,9 +5,10 @@ $(function() {
 function Deck() {
     this.cardMin = 1;
     this.cardMax = 52;
-    this.dealerCardsArr = [];
 
     this.showCardsArr = function() {
+
+        this.dealerCardsArr = [];
 
         for(var i = this.cardMin; i <= this.cardMax; i++) {
             this.dealerCardsArr.push(i);
@@ -18,6 +19,7 @@ function Deck() {
 
     this.showDeck = function() {
         $("#dealer-cards").empty();
+        $("#player-cards").empty().append("<h3>Player</h3>");
 
         var cards = this.showCardsArr();
         for(var i = this.cardMin - 1; i <= this.cardMax - 1; i++) {
@@ -45,25 +47,48 @@ function Deck() {
 
         return this;
     }
+
+    this.dealFirstCard = function() {
+        var firstCard = $("#dealer-cards").find("img").first();
+
+        firstCard.clone().appendTo("#player-cards");
+
+        firstCard.remove();
+    }
+
+    this.dealRandomCard = function() {
+        var randomCard = $("#dealer-card").children("img").eq(0);
+
+        randomCard.remove();
+    }
 }
 
-// Create new object instances for the deck
-var showDealerDeck = new Deck();
-var shuffleDeckNow = new Deck();
 
-// Show dealer deck when clicking reset deck
-$("#reset-deck").on("click", function(e) {
-    e.preventDefault();
-    showDealerDeck.showDeck();
-});
+    // Create new object instance for the deck
+    var dealerDeckAction = new Deck();
 
-// When clicking #shuffle-deck link
-// execute shuffle deck function
-$("#shuffle-deck").on("click", function(e) {
-    e.preventDefault();
-    shuffleDeckNow.shuffleDeck();
-});
+    // Show dealer deck when clicking reset deck
+    $("#reset-deck").on("click", function(e) {
+        e.preventDefault();
+        dealerDeckAction.showDeck();
+    });
 
+    // When clicking #shuffle-deck link
+    // execute shuffle deck function
+    $("#shuffle-deck").on("click", function(e) {
+        e.preventDefault();
+        dealerDeckAction.shuffleDeck();
+    });
+
+    $(document).on("click", "#deal-first-card", function(e) {
+        e.preventDefault();
+        dealerDeckAction.dealFirstCard();
+    });
+
+    $(document).on("click", "#deal-random-card", function(e) {
+        e.preventDefault();
+        dealerDeckAction.dealRandomCard();
+    });
 
 
 });
