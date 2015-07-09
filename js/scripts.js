@@ -82,9 +82,8 @@ $(function() {
             var name = prompt("Please enter your name");
 
             if(name != null) {
-                // alert(name);
 
-                $("#player-cards").find("span").append("Name: Matt");
+                $("#player-cards").find("span").append("Name: " + name);
             }
 
             return this;
