@@ -10,14 +10,14 @@ body {
     width: 920px;
     padding: 20px 20px;
     margin: 0 auto;
-    height: 400px;
+    height: 450px;
     background: #fff;
     position: relative;
 }
 
 #player-cards {
     width: 600px;
-    height: 150px;
+    height: 200px;
     padding: 0 0 0 130px;
     clear: both;
 }
