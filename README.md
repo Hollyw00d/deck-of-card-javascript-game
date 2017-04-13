@@ -1,2 +1,2 @@
-# deck-of-card-javascript-game
+# deck-of-cards-javascript-game
 Deck of Cards JavaScript Game
